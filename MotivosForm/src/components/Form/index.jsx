@@ -6,10 +6,7 @@ import { Grid, Typography, TextField, Button } from '@mui/material';
 const Form = ({ xsResolution }) => {
   
   const [form, setForm] = useState({nombre:'', motivos: '', invalidName: true, invalidMotivos: true})
-  const changeText = (e) => {
-
-  
-    
+  const changeText = (e) => {    
     if(e.target.name === "nombre"){
 
       if(e.target.value.length < 3){
@@ -27,6 +24,17 @@ const Form = ({ xsResolution }) => {
       }
     }
   }
+
+  const sendMotivos = () => {
+
+    fetch(`http://iceparodi.somee.com/api/message?user=${form.nombre}&message=${form.motivos}`)
+      .then((response)=>{
+        console.log("le mande los motivos a juan" + response.data);
+      }).catch((err)=>{
+        console.log("hay un error" + err);
+      })
+  }
+  
 
   return (
     <div id={xsResolution ? "form_mobile" : "form"}>
@@ -71,7 +79,7 @@ const Form = ({ xsResolution }) => {
         />
           </Grid>
           <Grid item xs={12} className='items'>
-            <Button variant="contained" disabled={(form.nombre.length < 3 || !form.invalidName) || (form.motivos.length < 5 || !form.invalidMotivos)}>Enviar motivo</Button>
+            <Button onClick={sendMotivos} variant="contained" disabled={(form.nombre.length < 3 || !form.invalidName) || (form.motivos.length < 5 || !form.invalidMotivos)}>Enviar motivo</Button>
           </Grid>
         </Grid>
     </div>
