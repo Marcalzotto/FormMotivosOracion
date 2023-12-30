@@ -26,8 +26,7 @@ const Form = ({ xsResolution }) => {
   }
 
   const sendMotivos = () => {
-
-    fetch(`http://iceparodi.somee.com/api/message?user=${form.nombre}&message=${form.motivos}`)
+    fetch(`https://iceparodi.bsite.net/api/message?user=${form.nombre}&message=${form.motivos}`)
       .then((response)=>{
         console.log("le mande los motivos a juan" + response.data);
       }).catch((err)=>{
