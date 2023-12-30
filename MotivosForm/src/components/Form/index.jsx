@@ -40,7 +40,7 @@ const Form = ({ xsResolution }) => {
         setOpenSnackBar(true);
         setTimeout(()=>{
           setForm({...form, nombre:"", motivos:"", invalidName: true, invalidMotivos:true})
-        },3000);
+        },1500);
 
       }).catch((err)=>{
         setSnackBarMessages({...snackBarMessages, message:"Lo sentimos, no pudimos enviar el motivo", severity:"error"});
@@ -96,7 +96,7 @@ const Form = ({ xsResolution }) => {
             <Button onClick={sendMotivos} variant="contained" disabled={(form.nombre.length < 3 || !form.invalidName) || (form.motivos.length < 5 || !form.invalidMotivos)}>Enviar motivo</Button>
           </Grid>
           
-            <Snackbar className='snack' open={openSnackBar} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+            <Snackbar className='snack' open={openSnackBar} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
               <Alert onClose={handleClose} severity={snackBarMessages.severity} sx={{ width: '100%' }}>
                 {snackBarMessages.message}
               </Alert>
