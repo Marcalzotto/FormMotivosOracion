@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;0,900;1,600&display=swap');
+
+#app{
+  align-items: center;
+  text-align: center;
+  margin: 12% 30% 30% 25%;
+  background-color: #DBEFBC
+  ;
+}
+
+#app_mobile{
+  align-items: center;
+  text-align: center;
+  padding: 40px 40px 0 40px;
+  margin: 30% 0 0 0;
+  background-color: #DBEFBC;
+}
+
