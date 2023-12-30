@@ -1,11 +1,18 @@
 import {useState} from 'react'
 import './Form.scss';
-import { Grid, Typography, TextField, Button } from '@mui/material';
+import { Grid, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
 
 
 const Form = ({ xsResolution }) => {
   
-  const [form, setForm] = useState({nombre:'', motivos: '', invalidName: true, invalidMotivos: true})
+  const [form, setForm] = useState({nombre:'', motivos: '', invalidName: true, invalidMotivos: true});
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [snackBarMessages, setSnackBarMessages] = useState({message:"", severity:""});
+  const handleClose=()=>{
+    setOpenSnackBar(false);
+  }
+
+
   const changeText = (e) => {    
     if(e.target.name === "nombre"){
 
@@ -28,8 +35,16 @@ const Form = ({ xsResolution }) => {
   const sendMotivos = () => {
     fetch(`https://iceparodi.bsite.net/api/message?user=${form.nombre}&message=${form.motivos}`)
       .then((response)=>{
-        console.log("le mande los motivos a juan" + response.data);
+        console.log("le mande los motivos a juan" + response.status);
+        setSnackBarMessages({...snackBarMessages, message:"Tu motivo fue enviado con exito!", severity:"success"});
+        setOpenSnackBar(true);
+        setTimeout(()=>{
+          setForm({...form, nombre:"", motivos:"", invalidName: true, invalidMotivos:true})
+        },3000);
+
       }).catch((err)=>{
+        setSnackBarMessages({...snackBarMessages, message:"Lo sentimos, no pudimos enviar el motivo", severity:"error"});
+        setOpenSnackBar(true);
         console.log("hay un error" + err);
       })
   }
@@ -80,7 +95,15 @@ const Form = ({ xsResolution }) => {
           <Grid item xs={12} className='items'>
             <Button onClick={sendMotivos} variant="contained" disabled={(form.nombre.length < 3 || !form.invalidName) || (form.motivos.length < 5 || !form.invalidMotivos)}>Enviar motivo</Button>
           </Grid>
+          
+            <Snackbar className='snack' open={openSnackBar} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+              <Alert onClose={handleClose} severity={snackBarMessages.severity} sx={{ width: '100%' }}>
+                {snackBarMessages.message}
+              </Alert>
+            </Snackbar>
+        
         </Grid>
+        
     </div>
   )
 }
